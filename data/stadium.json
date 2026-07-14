@@ -1,0 +1,74 @@
+[
+  {
+    "id": "gate-1",
+    "name": "Gate 1 (North Main)",
+    "crowdLevelPercentage": 85,
+    "stepFreeAccess": true,
+    "facilitiesNearby": {
+      "restrooms": "50m left, step-free",
+      "food": "100m right, standard stalls",
+      "emergencyInfo": "First aid station right next to the entrance",
+      "accessibleRoute": "Ramp available straight ahead"
+    }
+  },
+  {
+    "id": "gate-2",
+    "name": "Gate 2 (North East)",
+    "crowdLevelPercentage": 40,
+    "stepFreeAccess": false,
+    "facilitiesNearby": {
+      "restrooms": "150m downstairs",
+      "food": "Vending machines 50m ahead",
+      "emergencyInfo": "Security desk 20m inside",
+      "accessibleRoute": "Use Gate 1 for step-free access"
+    }
+  },
+  {
+    "id": "gate-3",
+    "name": "Gate 3 (East)",
+    "crowdLevelPercentage": 95,
+    "stepFreeAccess": true,
+    "facilitiesNearby": {
+      "restrooms": "Crowded restrooms 100m straight",
+      "food": "Major food court 200m ahead",
+      "emergencyInfo": "Medical tent 50m left",
+      "accessibleRoute": "Elevator access to all levels"
+    }
+  },
+  {
+    "id": "gate-4",
+    "name": "Gate 4 (South Main)",
+    "crowdLevelPercentage": 20,
+    "stepFreeAccess": true,
+    "facilitiesNearby": {
+      "restrooms": "Accessible restrooms 30m right",
+      "food": "Dietary/vegan options stall 40m left",
+      "emergencyInfo": "Police post next to gate",
+      "accessibleRoute": "Ramps and elevators available"
+    }
+  },
+  {
+    "id": "gate-5",
+    "name": "Gate 5 (South West)",
+    "crowdLevelPercentage": 60,
+    "stepFreeAccess": false,
+    "facilitiesNearby": {
+      "restrooms": "100m ahead, multiple steps",
+      "food": "Hot dog stand 20m",
+      "emergencyInfo": "First aid 300m away at Gate 6",
+      "accessibleRoute": "No step-free route, direct fans to Gate 4"
+    }
+  },
+  {
+    "id": "gate-6",
+    "name": "Gate 6 (West)",
+    "crowdLevelPercentage": 35,
+    "stepFreeAccess": true,
+    "facilitiesNearby": {
+      "restrooms": "Restrooms 50m, newly cleaned",
+      "food": "Family restaurant 100m",
+      "emergencyInfo": "Medical center and lost & found 20m",
+      "accessibleRoute": "Ground floor access to all primary facilities"
+    }
+  }
+]

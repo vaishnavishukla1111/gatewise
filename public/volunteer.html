@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GateWise - Volunteer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="align-items: flex-start; padding-top: 40px;">
+    
+    <div style="width: 100%; max-width: 1000px; margin: 0 auto;">
+        <header>
+            <h1 class="brand-title">Gate<span class="highlight">Wise</span> Dashboard</h1>
+            <p class="subtitle">Live Operational Intelligence</p>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Stadium Overview Panel -->
+            <div class="panel">
+                <h2>Stadium Overview</h2>
+                <div id="stadiumDataContainer">
+                    <p style="color: var(--text-muted)">Loading stadium data...</p>
+                </div>
+            </div>
+
+            <!-- Live Requests Panel -->
+            <div class="panel">
+                <h2>Live Fan Requests</h2>
+                <div id="requestsLogContainer" style="max-height: 500px; overflow-y: auto; padding-right: 10px;">
+                    <p style="color: var(--text-muted)">Loading requests...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="secondary-btn" style="display: inline-block; padding: 10px 20px; text-decoration: none;">Back to Fan App</a>
+        </div>
+    </div>
+
+    <script src="volunteer.js"></script>
+</body>
+</html>

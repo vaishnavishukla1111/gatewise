@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GateWise - FIFA World Cup 2026 Assistant</title>
+    <meta name="description" content="AI-powered assistant for stadium navigation and facilities during the FIFA World Cup 2026.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1 class="brand-title">Gate<span class="highlight">Wise</span></h1>
+            <p class="subtitle">FIFA 2026 Stadium Assistant</p>
+        </header>
+
+        <main>
+            <form id="askForm" aria-label="Ask the Assistant">
+                
+                <div class="form-group">
+                    <label for="gateId">Current Location</label>
+                    <select id="gateId" name="gateId" required aria-required="true">
+                        <option value="" disabled selected>Select your current gate</option>
+                        <option value="gate-1">Gate 1 (North Main)</option>
+                        <option value="gate-2">Gate 2 (North East)</option>
+                        <option value="gate-3">Gate 3 (East)</option>
+                        <option value="gate-4">Gate 4 (South Main)</option>
+                        <option value="gate-5">Gate 5 (South West)</option>
+                        <option value="gate-6">Gate 6 (West)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Preferred Language</label>
+                    <select id="language" name="language" required aria-required="true">
+                        <option value="English" selected>English</option>
+                        <option value="Spanish">Español (Spanish)</option>
+                        <option value="French">Français (French)</option>
+                        <option value="Hindi">हिन्दी (Hindi)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="need">What do you need?</label>
+                    <select id="need" name="need" required aria-required="true">
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Directions to my seat">Directions</option>
+                        <option value="Restrooms">Restrooms</option>
+                        <option value="Accessible Route">Accessible Route</option>
+                        <option value="Food & Beverages">Food / Concessions</option>
+                        <option value="Emergency Info / First Aid">Emergency / First Aid</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="accessibility" name="accessibility">
+                    <label for="accessibility">I require step-free / wheelchair access</label>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Ask Assistant</span>
+                    <span class="loader" aria-hidden="true" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div id="responseContainer" class="response-card hidden" aria-live="polite">
+                <div class="response-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai-icon"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <h2>Recommendation</h2>
+                </div>
+                <p id="responseText"></p>
+                <button id="resetBtn" class="secondary-btn">Ask another question</button>
+            </div>
+            
+            <a href="/volunteer.html" class="volunteer-link">Staff Login</a>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
