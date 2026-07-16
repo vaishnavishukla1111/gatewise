@@ -2,12 +2,16 @@
 
 GateWise is a smart, dynamic AI assistant designed for FIFA World Cup 2026 fans and stadium volunteers. Built for the Hack2Skills Challenge 4.
 
-## Problem Statement Themes Covered
-- **Navigation:** Context-aware routing based on current gate and desired facilities.
-- **Multilingual Assistance:** Seamlessly responds in English, Spanish, French, and Hindi.
-- **Crowd Management:** AI factors in real-time crowd density (mocked) to distribute fans effectively.
-- **Accessibility:** Users can flag wheelchair/step-free needs, and the AI will only recommend accessible routes/facilities.
-- **Operational Intelligence:** Volunteers have a live dashboard to monitor crowd levels and spot patterns in fan requests.
+## Problem Statement Alignment
+
+# GateWise directly addresses the following themes from the FIFA World Cup 2026 Smart Stadiums & Tournament Operations challenge:
+
+- **Navigation:** The fan assistant (`public/index.html`, `routes/ask.js`) provides step-by-step directions to gates, facilities, and seating based on the user's current location.
+- **Crowd Management:** Real-time crowd level data (`data/stadium.json`) is factored into every AI recommendation, actively routing fans away from congested gates.
+- **Accessibility:** The AI explicitly checks step-free access requirements and prioritizes accessible routes and facilities for users who request them.
+- **Multilingual Assistance:** Fans can request guidance in multiple languages (English, Spanish, French, Hindi), and the AI responds fully in the selected language.
+- **Operational Intelligence:** The volunteer dashboard (`public/volunteer.html`, `routes/volunteer.js`) gives stadium staff a live view of crowd levels and a running log of fan requests, surfacing real-time patterns.
+- **Real-Time Decision Support:** Every AI response reasons over multiple live factors simultaneously (crowd level + accessibility + facility proximity) and explains its recommendation, rather than returning a static lookup.
 
 ## How the AI Reasoning Works
 Instead of a simple lookup table, the backend dynamically constructs a comprehensive prompt using the Gemini API. 
