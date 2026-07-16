@@ -33,7 +33,7 @@ describe('GateWise API Tests', () => {
                 need: 'Restrooms'
             });
             expect(res.statusCode).toBe(400);
-            expect(res.body.error).toContain('Missing required fields');
+            expect(res.body.error).toContain('Missing or invalid required fields');
         });
 
         it('should return 404 if an invalid gateId is provided', async () => {

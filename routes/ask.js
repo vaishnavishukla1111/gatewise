@@ -1,21 +1,34 @@
+/**
+ * @fileoverview Fan assistant API route
+ * Handles fan requests, queries Gemini API, and provides navigation recommendations.
+ */
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const fs = require('fs');
-const path = require('path');
 
 const router = express.Router();
 
-// Load stadium data once
-const stadiumDataPath = path.join(__dirname, '..', 'data', 'stadium.json');
-const stadiumData = JSON.parse(fs.readFileSync(stadiumDataPath, 'utf8'));
+// Load stadium data once (cached by Node.js module system)
+const stadiumData = require('../data/stadium.json');
 
+/**
+ * POST /api/ask
+ * Generates an AI recommendation based on fan context.
+ * @name post/
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 router.post('/', async (req, res) => {
     try {
-        const { gateId, language, need, accessibility } = req.body;
+        // Sanitize and destructure input
+        const gateId = String(req.body.gateId || '').trim();
+        const language = String(req.body.language || '').trim();
+        const need = String(req.body.need || '').trim();
+        const accessibility = Boolean(req.body.accessibility);
 
-        // Basic input validation
+        // Strict input validation
         if (!gateId || !language || !need) {
-            return res.status(400).json({ error: 'Missing required fields: gateId, language, or need.' });
+            return res.status(400).json({ error: 'Missing or invalid required fields: gateId, language, or need.' });
         }
 
         // Validate API Key

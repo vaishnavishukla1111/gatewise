@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Main Express server entry point.
+ * Sets up middleware, routing, and shared state.
+ */
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');

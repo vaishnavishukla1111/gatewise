@@ -3,13 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const stadiumDataContainer = document.getElementById('stadiumDataContainer');
     const requestsLogContainer = document.getElementById('requestsLogContainer');
 
+    let lastDataHash = '';
+
     async function fetchDashboardData() {
         try {
             const response = await fetch('/api/volunteer/data');
             const data = await response.json();
             
-            renderStadiumData(data.stadiumData);
-            renderRequestsLog(data.recentRequests);
+            // Simple stringify to check if data changed to avoid redundant DOM updates
+            const currentDataHash = JSON.stringify(data);
+            if (currentDataHash !== lastDataHash) {
+                renderStadiumData(data.stadiumData);
+                renderRequestsLog(data.recentRequests);
+                lastDataHash = currentDataHash;
+            }
 
         } catch (error) {
             console.error('Failed to fetch dashboard data:', error);
