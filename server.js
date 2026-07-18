@@ -8,8 +8,8 @@ const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config();
 
-const askRoute = require('./routes/ask');
-const volunteerRoute = require('./routes/volunteer');
+const askRouter = require('./routes/ask');
+const volunteerRouter = require('./routes/volunteer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,16 +28,17 @@ const fanRequestsLog = [];
 
 // API Routes
 app.use('/api/ask', (req, res, next) => {
-    // Inject the shared log array into the request so the ask route can append to it
+    // Inject the shared log array into the request object 
+    // This allows the ask route to append new requests without needing a persistent database
     req.fanRequestsLog = fanRequestsLog;
     next();
-}, askRoute);
+}, askRouter);
 
 app.use('/api/volunteer', (req, res, next) => {
-    // Inject the shared log array so the volunteer route can read it
+    // Inject the shared log array so the volunteer route can serve the data to the dashboard
     req.fanRequestsLog = fanRequestsLog;
     next();
-}, volunteerRoute);
+}, volunteerRouter);
 
 // Fallback for 404
 app.use((req, res) => {
