@@ -4,9 +4,17 @@
  */
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const rateLimit = require('express-rate-limit');
+
 
 const router = express.Router();
 
+// Limit to 10 requests per minute per IP to protect the Gemini API
+const apiLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 10,
+    message: { error: 'Too many requests from this IP, please try again after a minute.' }
+});
 // Load stadium data once (cached by Node.js module system)
 const stadiumData = require('../data/stadium.json');
 
@@ -31,7 +39,7 @@ function validateRequest(body) {
     if (!gateId || !language || !need) {
         return { isValid: false, error: 'Missing or invalid required fields: gateId, language, or need.' };
     }
-    
+
     // Enforce length limits to prevent large payload injections
     if (gateId.length > 50 || language.length > 50 || need.length > 300) {
         return { isValid: false, error: 'Input fields exceed maximum allowed length.' };
@@ -54,7 +62,7 @@ function logFanRequest(logArray, data) {
         need: data.need,
         accessibility: data.accessibility ? 'Wheelchair/Accessible required' : 'None'
     });
-    
+
     // Keep only last 100 requests to avoid memory bloat
     if (logArray.length > 100) {
         logArray.pop();
@@ -103,7 +111,7 @@ IMPORTANT INSTRUCTIONS:
  */
 async function fetchRecommendation(apiKey, prompt) {
     const genAI = new GoogleGenerativeAI(apiKey);
-    
+
     // Fallback list: try the newest first, then fall back to older/alternative models 
     // to handle 503 (high traffic), 429 (quota limit), or 404 (deprecated) errors automatically.
     const modelsToTry = [
@@ -113,7 +121,7 @@ async function fetchRecommendation(apiKey, prompt) {
         'gemini-2.5-pro',
         'gemini-2.0-flash'
     ];
-    
+
     for (const modelName of modelsToTry) {
         try {
             const model = genAI.getGenerativeModel({ model: modelName });
@@ -129,7 +137,7 @@ async function fetchRecommendation(apiKey, prompt) {
     }
 }
 
-router.post('/', async (req, res) => {
+router.post('/', apiLimiter, async (req, res) => {
     try {
         const validation = validateRequest(req.body);
         if (!validation.isValid) {
@@ -143,8 +151,11 @@ router.post('/', async (req, res) => {
         }
 
         logFanRequest(req.fanRequestsLog, validation.data);
+        // Emit an event to update the dashboard instantly
+        req.app.get('io').emit('new_request', { stadiumData, recentRequests: req.fanRequestsLog });
 
         const currentGate = stadiumData.find(g => g.id === validation.data.gateId);
+
         if (!currentGate) {
             return res.status(404).json({ error: 'Gate not found in stadium data.' });
         }

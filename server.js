@@ -14,6 +14,17 @@ const volunteerRouter = require('./routes/volunteer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// --- NEW CODE: Setup HTTP server and Socket.io ---
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server);
+app.set('io', io);
+io.on('connection', (socket) => {
+    console.log('A dashboard client connected');
+});
+// 
+
 // Security and utility middlewares
 app.use(helmet());
 app.use(cors());
@@ -47,10 +58,10 @@ app.use((req, res) => {
 
 // Start the server
 if (require.main === module) {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`GateWise Server running on http://localhost:${PORT}`);
     });
 }
 
 // Export for testing
-module.exports = app;
+module.exports = server;

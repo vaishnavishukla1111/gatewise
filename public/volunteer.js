@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     const stadiumDataContainer = document.getElementById('stadiumDataContainer');
     const requestsLogContainer = document.getElementById('requestsLogContainer');
 
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/volunteer/data');
             const data = await response.json();
-            
+
             // Simple stringify to check if data changed to avoid redundant DOM updates
             const currentDataHash = JSON.stringify(data);
             if (currentDataHash !== lastDataHash) {
@@ -69,9 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // Initial fetch
+    // Initial fetch to populate data when page loads
     fetchDashboardData();
 
-    // Poll every 5 seconds for updates
-    setInterval(fetchDashboardData, 5000);
+    // Connect to Socket.io
+    const socket = io();
+    // Listen for real-time updates from the server
+    const srAnnouncer = document.getElementById('srAnnouncer');
+    socket.on('new_request', (data) => {
+        console.log('Real-time update received!');
+        renderStadiumData(data.stadiumData);
+        renderRequestsLog(data.recentRequests);
+        srAnnouncer.textContent = 'New fan request received.';
+    });
 });
